@@ -13,7 +13,10 @@ int main(int argc, char* argv[])
 {
 	double x, y, PI;
 	int innerCount = 0;
+
 	srand(unsigned(time(NULL)));
+
+	clock_t startWork = clock();
 
 	for (int i = 0; i < (int)MAX_INNER_COUNT; ++i) {
 		x = generateRandomNumber();
@@ -23,7 +26,13 @@ int main(int argc, char* argv[])
 		}
 	}
 	PI = countPI(innerCount);
+
+	clock_t endWork = clock();
+
+	float workTime = (float)(endWork - startWork) / CLOCKS_PER_SEC;
+
 	cout << "Number of PI: " << PI << endl;
+	cout << "Time of work: " << workTime << endl;
 }
 
 double generateRandomNumber() {
