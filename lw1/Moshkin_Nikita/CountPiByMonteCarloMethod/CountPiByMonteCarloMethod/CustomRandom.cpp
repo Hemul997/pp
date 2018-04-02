@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "CustomRandom.h"
 
-
 double CustomRandom::GenerateRandomNumber(double maxValue, double minValue)
 {
 	double random = (double)rand() / RAND_MAX * maxValue - minValue;

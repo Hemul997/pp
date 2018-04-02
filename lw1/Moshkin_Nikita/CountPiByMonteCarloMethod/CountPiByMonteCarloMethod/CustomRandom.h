@@ -1,6 +1,9 @@
+#pragma once
+
 #include "Point.h"
 
-class CustomRandom {
+class CustomRandom 
+{
 public:
 	double GenerateRandomNumber(double maxValue, double minValue);
 	Point GenerateRandomPoint(int radius);
