@@ -1,4 +1,7 @@
 #include "stdafx.h"
+#include "ThreadHandler.h"
+#include "Point.h"
+#include "CustomRandom.h"
 #include "MonteCarloMethod.h"
 
 UINT64 MonteCarloMethod::m_innerCount = 0;

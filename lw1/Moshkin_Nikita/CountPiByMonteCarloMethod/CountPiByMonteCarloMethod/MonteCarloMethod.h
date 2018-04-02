@@ -1,9 +1,6 @@
 #pragma once
 #include <Windows.h>
-#include "stdafx.h"
-#include "ThreadHandler.h"
-#include "Point.h"
-#include "CustomRandom.h"
+
 
 
 DWORD WINAPI GeneratePointsInCircle(LPVOID maxInnerCount);
