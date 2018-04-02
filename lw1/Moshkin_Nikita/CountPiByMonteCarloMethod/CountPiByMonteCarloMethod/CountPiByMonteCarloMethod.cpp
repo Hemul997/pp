@@ -1,28 +1,33 @@
 #include "stdafx.h" 
-#include "Point.h"
-#include "CustomRandom.h"
 #include "MonteCarloMethod.h"
 
 #define CIRCLE_RADIUS 1
 
 using namespace std;
 
+const string helpMessage = "Use <CountPiByMonteCarloMethod.exe> <iterations count> <threads count>";
+const string errorMessage = "Error of arguments! Use <CountPiByMonteCarloMethod.exe> --help to find startup parameters";
+
 int main(int argc, char* argv[])
 {
-	double PI;
-	
+	if ((argc == 2 && string(argv[1]) == "--help")) 
+	{
+		cout << helpMessage << endl;
+		return 0;
+	}
+
 	if (argc < 3) {
-		cout << "Error of arguments count" << endl;
+		cout << errorMessage << endl;
 		return 1;
 	}
 
-	int maxInnerCount = atoi(argv[1]);
-	int threadsCount = atoi(argv[2]);
+	size_t maxIterCount = atoi(argv[1]);
+	size_t threadsCount = atoi(argv[2]);
 
 	clock_t startWork = clock();
-	MonteCarloMethod monteCarlo = MonteCarloMethod(maxInnerCount, 4);
+	MonteCarloMethod monteCarlo = MonteCarloMethod(maxIterCount, threadsCount);
 	monteCarlo.Run();
-	PI = monteCarlo.GetPI();
+	double PI = monteCarlo.GetResult();
 
 	clock_t endWork = clock();
 

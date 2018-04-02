@@ -1,35 +1,35 @@
 #include "stdafx.h"
 #include "MonteCarloMethod.h"
 
+UINT64 MonteCarloMethod::m_innerCount = 0;
+UINT64 MonteCarloMethod::m_currentIterCount = 0;
 
-MonteCarloMethod::MonteCarloMethod(int maxInnerCount, int threadsCount)
+MonteCarloMethod::MonteCarloMethod(size_t maxIterCount, size_t threadsCount)
 {
-	m_maxInnerCount = maxInnerCount;
+	m_maxIterCount = maxIterCount;
 	m_threadsCount = threadsCount;
 	m_result = 0;
 }
 
 void MonteCarloMethod::Run() {
-	ThreadHandler threadHandler;
-	threadHandler.PushThread(GeneratePointsInCircle, &m_maxInnerCount);
 	srand(unsigned(time(NULL)));
+	ThreadHandler threadHandler;
+	threadHandler.PushThread(GeneratePointsInCircle, &m_maxIterCount);
+	
 	if (m_threadsCount > 1)
 	{
-		for (int i = 1; i < m_threadsCount; ++i) {
-			threadHandler.PushThread(GeneratePointsInCircle, &m_maxInnerCount);
+		for (size_t i = 1; i < m_threadsCount; ++i) {
+			threadHandler.PushThread(GeneratePointsInCircle, &m_maxIterCount);
 		}
 	}
-	
+
 	threadHandler.JoinAll();
-	
 	CountPI();
 }
 
 MonteCarloMethod::~MonteCarloMethod()
 {
 }
-UINT64 m_innerCount = 0;
-UINT64 m_currentIterCount = 0;
 
 void MonteCarloMethod::IncrementInnerCount() 
 {
@@ -41,16 +41,15 @@ void MonteCarloMethod::IncrementCurrentIterCount()
 	InterlockedIncrement(&m_currentIterCount);
 }
 
-DWORD WINAPI GeneratePointsInCircle(LPVOID maxInnerCount) 
+DWORD WINAPI GeneratePointsInCircle(LPVOID lpParam) 
 {
 	CustomRandom random;
-	int *param = (int*)maxInnerCount;
-	const int maxCount = *param;
-	Point randomPoint = Point();
+	int *maxIterCount = (int*)lpParam;
+	const int maxCount = *maxIterCount;
 
 	for (;MonteCarloMethod::GetCurrentIterCount() < maxCount;) 
 	{
-		randomPoint = random.GenerateRandomPoint(CIRCLE_RADIUS);
+		Point randomPoint = random.GenerateRandomPoint(CIRCLE_RADIUS);
 
 		if (randomPoint.inCircle(CIRCLE_RADIUS)) 
 		{
@@ -74,10 +73,10 @@ UINT64 MonteCarloMethod::GetCurrentIterCount()
 
 void MonteCarloMethod::CountPI()
 {
-	m_result = (double)((4. * MonteCarloMethod::GetInnerCount()) / m_maxInnerCount);
+	m_result = ((4. * MonteCarloMethod::GetInnerCount()) / m_maxIterCount);
 }
 
-double MonteCarloMethod::GetPI() 
+double MonteCarloMethod::GetResult()
 {
 	return m_result;
 }
