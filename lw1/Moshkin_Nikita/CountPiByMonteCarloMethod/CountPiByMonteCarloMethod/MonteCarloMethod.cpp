@@ -52,7 +52,7 @@ DWORD WINAPI GeneratePointsInCircle(LPVOID lpParam)
 	int *maxIterCount = (int*)lpParam;
 	const int maxCount = *maxIterCount;
 
-	for (;MonteCarloMethod::GetCurrentIterCount() < maxCount;) 
+	while (MonteCarloMethod::GetCurrentIterCount() < maxCount) 
 	{
 		Point randomPoint = random.GenerateRandomPoint(CIRCLE_RADIUS);
 
