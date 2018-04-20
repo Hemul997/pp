@@ -4,6 +4,8 @@
 #include "CustomRandom.h"
 #include "MonteCarloMethod.h"
 
+const int CIRCLE_RADIUS = 1;
+
 UINT64 MonteCarloMethod::m_innerCount = 0;
 UINT64 MonteCarloMethod::m_currentIterCount = 0;
 
