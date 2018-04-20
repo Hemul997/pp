@@ -1,7 +1,6 @@
 #include "stdafx.h" 
 #include "MonteCarloMethod.h"
 
-#define CIRCLE_RADIUS 1
 
 using namespace std;
 
