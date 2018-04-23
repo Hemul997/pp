@@ -46,26 +46,6 @@ void MonteCarloMethod::IncrementCurrentIterCount()
 	InterlockedIncrement(&m_currentIterCount);
 }
 
-DWORD WINAPI GeneratePointsInCircle(LPVOID lpParam) 
-{
-	CustomRandom random;
-	int *maxIterCount = (int*)lpParam;
-	const int maxCount = *maxIterCount;
-
-	while (MonteCarloMethod::GetCurrentIterCount() < maxCount) 
-	{
-		Point randomPoint = random.GenerateRandomPoint(CIRCLE_RADIUS);
-
-		if (randomPoint.inCircle(CIRCLE_RADIUS)) 
-		{
-			MonteCarloMethod::IncrementInnerCount();
-		}
-
-		MonteCarloMethod::IncrementCurrentIterCount();
-	}
-	return 0;
-}
-
 UINT64 MonteCarloMethod::GetInnerCount()
 {
 	return m_innerCount;
@@ -79,6 +59,26 @@ UINT64 MonteCarloMethod::GetCurrentIterCount()
 void MonteCarloMethod::CountPI()
 {
 	m_result = ((4. * MonteCarloMethod::GetInnerCount()) / m_maxIterCount);
+}
+
+DWORD MonteCarloMethod::GeneratePointsInCircle(LPVOID lpParam)
+{
+	CustomRandom random;
+	int *maxIterCount = (int*)lpParam;
+	const int maxCount = *maxIterCount;
+
+	while (MonteCarloMethod::GetCurrentIterCount() < maxCount)
+	{
+		Point randomPoint = random.GenerateRandomPoint(CIRCLE_RADIUS);
+
+		if (randomPoint.inCircle(CIRCLE_RADIUS))
+		{
+			MonteCarloMethod::IncrementInnerCount();
+		}
+
+		MonteCarloMethod::IncrementCurrentIterCount();
+	}
+	return 0;
 }
 
 double MonteCarloMethod::GetResult()
