@@ -1,8 +1,6 @@
 #pragma once
 #include <Windows.h>
 
-//DWORD WINAPI GeneratePointsInCircle(LPVOID maxInnerCount);
-
 class MonteCarloMethod
 {
 public:
