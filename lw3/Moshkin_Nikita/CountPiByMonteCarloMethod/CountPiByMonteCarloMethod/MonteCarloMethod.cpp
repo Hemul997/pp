@@ -42,7 +42,8 @@ void MonteCarloMethod::CountPI()
 void MonteCarloMethod::GeneratePointsInCircle()
 {
 	CustomRandom random;
-
+	
+	#pragma omp parallel for
 	for (int i = 0; i < m_maxIterCount; ++i)
 	{
 		Point randomPoint = random.GenerateRandomPoint(CIRCLE_RADIUS);
