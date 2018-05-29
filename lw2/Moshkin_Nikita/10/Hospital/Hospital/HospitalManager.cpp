@@ -14,8 +14,6 @@ HospitalManager::HospitalManager():
 {
 }
 
-
-
 HospitalManager::~HospitalManager()
 {
 }
