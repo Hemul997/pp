@@ -7,8 +7,6 @@ Mutex::Mutex()
 	m_hMutex = CreateMutex(NULL, false, NULL);
 }
 
-
-
 Mutex::~Mutex()
 {
 	CloseHandle(m_hMutex);
